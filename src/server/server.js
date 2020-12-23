@@ -1,10 +1,29 @@
 import express from 'express';
+import mongoose from 'mongoose';
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import config from '../../webpack.client.config.js'
 
+require('dotenv').config();
+
 const app = express();
+const port = process.env.PORT || 3000;
+
+mongoose.connect('mongodb://localhost:27017/plan', {useNewUrlParser: true});
+
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  console.log("MongoDB connected");
+});
+
+const kittySchema = new mongoose.Schema({
+  name: String
+});
+const Kitten = mongoose.model('Kitten', kittySchema);
+const silence = new Kitten({ name: 'Silence' });
+silence.save();
 
 const argv = {
   mode: process.env.NODE_ENV
@@ -32,7 +51,7 @@ app.get("*", (req,res) => {
     })
 });
 
-app.listen(3000, () => {
-  devMode && console.log('server live @ 3000');
+app.listen(port, () => {
+  devMode && console.log(`server live @ ${port}`);
   devMode && console.log(process.env.NODE_ENV);
 });

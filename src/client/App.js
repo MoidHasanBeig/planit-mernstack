@@ -1,16 +1,30 @@
-import React, { Component} from "react";
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+import Page1 from "./components/Page1"
 import "./App.scss";
-import jan from './a.png'
+import jan from './images/a.png'
 
-class App extends Component{
-  render(){
-    return(
+function App(){
+  return(
+    <Router>
       <div className="App">
-        <h1> Hello, Moid! </h1>
-        <img src={jan} />
+        <Switch>
+          <Route path="/page1">
+            <Page1 />
+          </Route>
+          <Route path="/">
+            <h1> Hello, Moid! </h1>
+            <img src={jan} />
+          </Route>
+        </Switch>
       </div>
-    );
-  }
+    </Router>
+  );
 }
 
 export default App;
