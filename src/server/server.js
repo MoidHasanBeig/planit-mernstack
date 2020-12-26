@@ -51,6 +51,6 @@ app.use("/auth/google",loginRouter);
 app.use(renderHtml);
 
 app.listen(port, () => {
-  devMode && console.log(`server live @ ${port}`);
-  devMode && console.log(process.env.NODE_ENV);
+  console.log(`server live @ ${port}`);
+  console.log(process.env.NODE_ENV);
 });

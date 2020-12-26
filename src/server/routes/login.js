@@ -10,7 +10,11 @@ const loginRouter = Router();
 
 const authScope = 'https://www.googleapis.com/auth/userinfo';
 
-loginRouter.use(session({secret:process.env.SESSION_SECRET}));
+loginRouter.use(session({
+  secret:process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: true
+}));
 loginRouter.use(passport.initialize());
 loginRouter.use(passport.session());
 
@@ -22,7 +26,6 @@ passport.use(new GoogleStrategy({
   function(accessToken, refreshToken, profile, done) {
     console.log(profile);
     User.findOne({userid: profile.id}, (err,user) => {
-      console.log('existing user',user);
       if (user) done(err,user);
       else {
         let newUser = new User({
@@ -32,7 +35,6 @@ passport.use(new GoogleStrategy({
           image: profile.photos[0].value
         });
         newUser.save();
-        console.log('new user');
         done(null,newUser);
       }
     });
