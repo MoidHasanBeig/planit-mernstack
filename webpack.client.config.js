@@ -22,12 +22,14 @@ module.exports = (env, argv) => {
   });
 
   const hmr = new webpack.HotModuleReplacementPlugin();
-
   const noErr = new webpack.NoEmitOnErrorsPlugin();
+  const client = prodMode
+                  ? "./src/client/index.js"
+                  : ['webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000', "./src/client/index.js"]
 
   return ({
     entry: {
-      client: ['webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000', "./src/client/index.js"],
+      client: client,
     },
     mode: "development",
     target: "web",

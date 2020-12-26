@@ -18,7 +18,7 @@ function App(){
             <Page1 />
           </Route>
           <Route path="/">
-            <h1> Hello, Moid! </h1>
+            <h1> Hello, routes! </h1>
             <img src={jan} />
           </Route>
         </Switch>

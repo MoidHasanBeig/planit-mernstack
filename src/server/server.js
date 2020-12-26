@@ -1,29 +1,26 @@
 import express from 'express';
 import mongoose from 'mongoose';
+
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import config from '../../webpack.client.config.js'
 
+import loginRouter from './routes/login';
+
 require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT || 3000;
+const altlasUri = process.env.ATLAS_URI;
 
-mongoose.connect('mongodb://localhost:27017/plan', {useNewUrlParser: true});
+mongoose.connect(altlasUri, {useNewUrlParser: true, useCreateIndex: true});
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
   console.log("MongoDB connected");
 });
-
-const kittySchema = new mongoose.Schema({
-  name: String
-});
-const Kitten = mongoose.model('Kitten', kittySchema);
-const silence = new Kitten({ name: 'Silence' });
-silence.save();
 
 const argv = {
   mode: process.env.NODE_ENV
@@ -41,15 +38,17 @@ prodMode
 
 devMode && app.use(webpackHotMiddleware(compiler));
 
-app.get("*", (req,res) => {
+const renderHtml = (req,res) => {
   prodMode
     ? res.sendFile(__dirname + '/dist_index.html')
     :  compiler.outputFileSystem.readFile(compiler.outputPath + '/dist_index.html', (err,result) => {
       res.set('content-type', 'text/html');
       res.send(result);
-      res.end();
-    })
-});
+    });
+};
+
+app.use("/auth/google",loginRouter);
+app.use(renderHtml);
 
 app.listen(port, () => {
   devMode && console.log(`server live @ ${port}`);
