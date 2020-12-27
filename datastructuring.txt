@@ -1,0 +1,19 @@
+user {
+  name, email, photo ,userid, contacts, notifications
+}
+
+project {
+  title, creator -> userid, members, projectid
+}
+
+tasks {
+  todo | inprogress | done, datedue, assignedto -> userid, relatedproject -> projectid
+}
+
+messages {
+  messageid, from -> userid, to -> userid | groupid, content
+}
+
+groupchats {
+  title, relatedproject -> projectid, participants [members -> userids], groupid
+}
