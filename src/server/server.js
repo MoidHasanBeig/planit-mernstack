@@ -14,7 +14,11 @@ const app = express();
 const port = process.env.PORT || 3000;
 const altlasUri = process.env.ATLAS_URI;
 
-mongoose.connect(altlasUri, {useNewUrlParser: true, useCreateIndex: true});
+mongoose.connect(altlasUri, {
+  useNewUrlParser: true,
+  useCreateIndex: true,
+  useUnifiedTopology: true
+});
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
