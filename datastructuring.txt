@@ -1,13 +1,13 @@
 user {
-  name, email, photo ,userid, contacts, notifications
+  name, email, photo ,userid, [contacts -> userids], [projects -> projectids]
 }
 
 project {
-  title, creator -> userid, members, projectid
+  title, creator -> userid, members [-> userids], projectid
 }
 
 tasks {
-  todo | inprogress | done, datedue, assignedto -> userid, relatedproject -> projectid
+  status : (todo | inprogress | done), datedue, assignedto -> userid, relatedproject -> projectid, taskid
 }
 
 messages {
@@ -16,4 +16,12 @@ messages {
 
 groupchats {
   title, relatedproject -> projectid, participants [members -> userids], groupid
+}
+
+notifications {
+  content, notifid, project -> projectid, task -> taskid, from -> userid, read: true | false
+}
+
+connectionreq {
+  from -> userid, to -> userid, connectionid
 }

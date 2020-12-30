@@ -1,30 +1,26 @@
+require('dotenv').config();
+
 import express from 'express';
-import mongoose from 'mongoose';
+import http from 'http';
+import router from './router';
+
+import mongoInit from './utils/mongo_init';
+import socketInit from './utils/socket_init';
+import passportInit from './utils/passport_init';
 
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import config from '../../webpack.client.config.js'
 
-import loginRouter from './routes/login';
-
-require('dotenv').config();
-
 const app = express();
+const server = http.createServer(app);
 const port = process.env.PORT || 3000;
-const altlasUri = process.env.ATLAS_URI;
 
-mongoose.connect(altlasUri, {
-  useNewUrlParser: true,
-  useCreateIndex: true,
-  useUnifiedTopology: true
-});
-
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-  console.log("MongoDB connected");
-});
+//initialize utils
+passportInit(app);
+mongoInit();
+socketInit(server);
 
 const argv = {
   mode: process.env.NODE_ENV
@@ -43,7 +39,7 @@ prodMode
 devMode && app.use(webpackHotMiddleware(compiler));
 
 const renderHtml = (req,res) => {
-  prodMode
+    prodMode
     ? res.sendFile(__dirname + '/dist_index.html')
     :  compiler.outputFileSystem.readFile(compiler.outputPath + '/dist_index.html', (err,result) => {
       res.set('content-type', 'text/html');
@@ -51,10 +47,11 @@ const renderHtml = (req,res) => {
     });
 };
 
-app.use("/auth/google",loginRouter);
+//initialize router
+router(app);
 app.use(renderHtml);
 
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`server live @ ${port}`);
   console.log(process.env.NODE_ENV);
 });

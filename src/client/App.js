@@ -2,24 +2,24 @@ import React from "react";
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
-import Page1 from "./components/Page1"
+import Home from './pages/Home';
+import Login from './pages/Login';
+
 import "./App.scss";
-import jan from './images/a.png'
 
 function App(){
+
   return(
     <Router>
       <div className="App">
         <Switch>
-          <Route path="/page1">
-            <Page1 />
+          <Route path="/login">
+            <Login />
           </Route>
           <Route path="/">
-            <h1> Hello, routes! </h1>
-            <img src={jan} />
+            <Home />
           </Route>
         </Switch>
       </div>

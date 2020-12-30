@@ -25,7 +25,7 @@ module.exports = (env, argv) => {
   const noErr = new webpack.NoEmitOnErrorsPlugin();
   const client = prodMode
                   ? "./src/client/index.js"
-                  : ['webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000', "./src/client/index.js"]
+                  : ['webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000', "./src/client/index.js"];
 
   return ({
     entry: {
@@ -33,7 +33,7 @@ module.exports = (env, argv) => {
     },
     mode: "development",
     target: "web",
-    devtool: "source-map",
+    devtool: devMode ? "eval-source-map" : "hidden-source-map",
     module: {
       rules: [
         {

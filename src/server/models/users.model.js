@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import Data, { dataSchema } from './data.model';
 
 const Schema = mongoose.Schema;
 
