@@ -19,7 +19,7 @@ groupchats {
 }
 
 notifications {
-  content, notifid, project -> projectid, task -> taskid, from -> userid, read: true | false
+  content, notifid, project -> projectid, task -> taskid, for -> userid, read: true | false
 }
 
 connectionreq {

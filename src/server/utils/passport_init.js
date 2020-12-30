@@ -21,9 +21,10 @@ const passportInit = (app) => {
       callbackURL: "http://localhost:3000/auth/google/callback"
     },
     function(accessToken, refreshToken, profile, done) {
-      console.log(profile);
       User.findOne({userid: profile.id}, (err,user) => {
-        if (user) done(err,user);
+        if (user) {
+          done(err,user);
+        }
         else {
           let newUser = new User({
             username: profile.displayName,
@@ -32,7 +33,7 @@ const passportInit = (app) => {
             image: profile.photos[0].value
           });
           newUser.save();
-          done(null,newUser);
+          done(err,newUser);
         }
       });
     }

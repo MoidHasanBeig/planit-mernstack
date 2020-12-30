@@ -2,6 +2,7 @@ require('dotenv').config();
 
 import express from 'express';
 import http from 'http';
+import bodyParser from 'body-parser';
 import router from './router';
 
 import mongoInit from './utils/mongo_init';
@@ -16,6 +17,8 @@ import config from '../../webpack.client.config.js'
 const app = express();
 const server = http.createServer(app);
 const port = process.env.PORT || 3000;
+
+app.use(bodyParser.json());
 
 //initialize utils
 passportInit(app);

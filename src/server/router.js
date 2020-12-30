@@ -1,4 +1,5 @@
 import authRouter from './routes/auth';
+import projectRouter from './routes/project';
 
 const checkAuth = (req,res,next) => {
   if(req.isAuthenticated()) next();
@@ -8,15 +9,24 @@ const checkAuth = (req,res,next) => {
 const router = (app) => {
   //redirect after auth check
   app.all("/", checkAuth);
+
   //authentication
   app.use("/auth/google",authRouter);
+
   //login
   app.use("/login", (req,res,next) => {
     if(req.isAuthenticated()) res.redirect("/");
     else next();
   });
-  //test route
-  app.use("/test",checkAuth,(req,res) => res.send('Access granted'));
+
+  //logout
+  app.use("/logout", (req,res) => {
+    req.logout();
+    res.redirect("/login");
+  });
+
+  //project routes
+  app.use("/project", projectRouter);
 }
 
 export default router;
