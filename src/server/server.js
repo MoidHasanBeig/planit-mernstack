@@ -23,7 +23,7 @@ app.use(bodyParser.json());
 //initialize utils
 passportInit(app);
 mongoInit();
-socketInit(server);
+const io = socketInit(server);
 
 const argv = {
   mode: process.env.NODE_ENV
@@ -41,18 +41,13 @@ prodMode
 
 devMode && app.use(webpackHotMiddleware(compiler));
 
-const renderHtml = (req,res) => {
-    prodMode
-    ? res.sendFile(__dirname + '/dist_index.html')
-    :  compiler.outputFileSystem.readFile(compiler.outputPath + '/dist_index.html', (err,result) => {
-      res.set('content-type', 'text/html');
-      res.send(result);
-    });
-};
-
 //initialize router
-router(app);
-app.use(renderHtml);
+const routerConf = {
+  io,
+  prodMode,
+  compiler
+}
+router(app, routerConf);
 
 server.listen(port, () => {
   console.log(`server live @ ${port}`);

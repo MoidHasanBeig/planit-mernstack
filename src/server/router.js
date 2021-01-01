@@ -1,12 +1,13 @@
 import authRouter from './routes/auth';
 import projectRouter from './routes/project';
+import renderHtml from './routes/render';
 
 const checkAuth = (req,res,next) => {
   if(req.isAuthenticated()) next();
   else res.redirect('/login');
 }
 
-const router = (app) => {
+const router = (app,routerConf) => {
   //redirect after auth check
   app.all("/", checkAuth);
 
@@ -26,7 +27,10 @@ const router = (app) => {
   });
 
   //project routes
-  app.use("/project", projectRouter);
+  app.use("/project", (req) => projectRouter(req,routerConf.io));
+
+  //render html layout
+  app.use((req,res) => renderHtml(req,res,routerConf.prodMode,routerConf.compiler));
 }
 
 export default router;
