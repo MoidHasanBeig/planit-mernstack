@@ -1,5 +1,7 @@
+import Project from '../models/projects.model';
+
 const userFunctions = {
-  subscribe: (Project,projectId,socket) => {
+  subscribe: (projectId,socket) => {
     Project.find({_id: projectId}, (err,project) => {
       socket.join(project.name);
     })

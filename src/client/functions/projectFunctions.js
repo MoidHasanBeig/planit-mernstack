@@ -1,7 +1,7 @@
 const projectFunctions = {
   createProject: async (event,projDetails) => {
     event.preventDefault();
-    const rawResponse = await fetch('/project', {
+    await fetch('/project', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',

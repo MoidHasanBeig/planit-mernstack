@@ -10,18 +10,14 @@ tasks {
   status : (todo | inprogress | done), datedue, assignedto -> userid, relatedproject -> projectid, taskid
 }
 
-messages {
-  messageid, from -> userid, to -> userid | groupid, content
+indivmessages {
+  messageid, from -> userid, to -> userid, content, timestamp
 }
 
-groupchats {
-  title, relatedproject -> projectid, participants [members -> userids], groupid
+groupmessages {
+  messageid, from -> userid, project -> projectid, content, timestamp
 }
 
 notifications {
   content, notifid, project -> projectid, task -> taskid, for -> userid, read: true | false
-}
-
-connectionreq {
-  from -> userid, to -> userid, connectionid
 }

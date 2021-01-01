@@ -7,6 +7,26 @@ const userSchema = new Schema({
   email: String,
   userid: String,
   image: String,
+  contacts: [{
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  }],
+  projects: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Project'
+  }],
+  notifications: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Notification'
+  }],
+  sentMessages: [{
+    type: Schema.Types.ObjectId,
+    ref: 'IndivMsg'
+  }],
+  receivedMessages: [{
+    type: Schema.Types.ObjectId,
+    ref: 'IndivMsg'
+  }]
 });
 
 const User = mongoose.model('User',userSchema);
