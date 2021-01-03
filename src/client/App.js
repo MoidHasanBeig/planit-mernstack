@@ -10,7 +10,7 @@ import NotFound from './pages/NotFound';
 
 import "./App.scss";
 
-function App(){
+const App = () => {
 
   return(
     <Router>

@@ -1,6 +1,7 @@
 import authRouter from './routes/auth';
 import projectRouter from './routes/project';
 import renderHtml from './routes/render';
+import userRouter from './routes/user';
 
 const checkAuth = (req,res,next) => {
   if(req.isAuthenticated()) next();
@@ -12,7 +13,7 @@ const router = (app,routerConf) => {
   app.all("/", checkAuth);
 
   //authentication
-  app.use("/auth/google",authRouter);
+  app.use("/auth/google", authRouter);
 
   //login
   app.use("/login", (req,res,next) => {
@@ -26,8 +27,11 @@ const router = (app,routerConf) => {
     res.redirect("/login");
   });
 
-  //project routes
-  app.use("/project", (req) => projectRouter(req,routerConf.io));
+  //project
+  app.use("/project", checkAuth, (req,res) => projectRouter(req,res,routerConf.io));
+
+  //user
+  app.use("/getuser", checkAuth, userRouter);
 
   //render html layout
   app.use((req,res) => renderHtml(req,res,routerConf.prodMode,routerConf.compiler));

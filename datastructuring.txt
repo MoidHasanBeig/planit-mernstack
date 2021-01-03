@@ -21,3 +21,9 @@ groupmessages {
 notifications {
   content, notifid, project -> projectid, task -> taskid, for -> userid, read: true | false
 }
+
+
+creating room on new projects
+
+new project in backend -> project will have members ids -> client object will store member ids against socket ids ->
+on creating project, make respective members who're online join room with name as projectid

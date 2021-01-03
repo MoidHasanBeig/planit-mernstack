@@ -7,10 +7,18 @@ const Home = () => {
     title: '',
     members: ''
   });
+  let userId;
+  let socket;
 
   useEffect(() => {
-    console.log('io');
-    let socket = io();
+    socket = io();
+    socket.on('connect', async () => {
+      userId = await fetch('/getuser').then(res => res.json());
+      console.log(socket.id,userId);
+      socket.emit('userinfo',userId);
+    });
+
+    return () => socket.disconnect();
   },[]);
 
   function handleChange(event) {

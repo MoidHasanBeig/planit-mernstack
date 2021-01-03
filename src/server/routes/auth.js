@@ -2,7 +2,7 @@ require('dotenv').config();
 
 import passport from 'passport';
 import { Router } from 'express';
-import { OAuth2Strategy as GoogleStrategy } from 'passport-google-oauth';
+import { OAuth2Strategy as GoogleStrategy } from 'passport-google-oauth';// eslint-disable-line no-unused-vars
 
 const authRouter = Router();
 
