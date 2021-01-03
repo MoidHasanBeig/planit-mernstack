@@ -23,7 +23,7 @@ app.use(bodyParser.json());
 //initialize utils
 passportInit(app);
 mongoInit();
-const io = socketInit(server);
+socketInit(server);
 
 const argv = {
   mode: process.env.NODE_ENV
@@ -43,7 +43,6 @@ devMode && app.use(webpackHotMiddleware(compiler));
 
 //initialize router
 const routerConf = {
-  io,
   prodMode,
   compiler
 }

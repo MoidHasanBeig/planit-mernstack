@@ -28,7 +28,7 @@ const router = (app,routerConf) => {
   });
 
   //project
-  app.use("/project", checkAuth, (req,res) => projectRouter(req,res,routerConf.io));
+  app.use("/project", checkAuth, (req,res) => projectRouter(req,res));
 
   //user
   app.use("/getuser", checkAuth, userRouter);

@@ -1,15 +1,16 @@
 import * as socket from 'socket.io';
 
+let clients ={};
+let io;
+
 const socketInit = (server) => {
-  const io = socket(server);
-  let clients ={};
+  io = socket(server);
 
   io.on('connection', (socket) => {
     console.log('User connected',socket.id);
 
     socket.on('userinfo', (uid) => {
       clients[uid] = socket;
-      console.log(clients);
     });
 
     //on user disconnect
@@ -18,7 +19,6 @@ const socketInit = (server) => {
         clients[uid].id === socket.id && delete clients[uid];
       }
       console.log('user disconnected');
-      console.log(clients);
     });
   });
 
@@ -26,3 +26,4 @@ const socketInit = (server) => {
 }
 
 export default socketInit;
+export { io,clients };

@@ -1,6 +1,6 @@
 import React,{ useState,useEffect } from 'react';
-import io from '../../../node_modules/socket.io/client-dist/socket.io.js';
-import projectFunctions from '../functions/projectFunctions';
+import io from '../../../../node_modules/socket.io/client-dist/socket.io.js';
+import projectFunctions from '../../functions/projectFunctions';
 
 const Home = () => {
   const [projDetails,setProjDetails] = useState({
@@ -16,6 +16,8 @@ const Home = () => {
       userId = await fetch('/getuser').then(res => res.json());
       console.log(socket.id,userId);
       socket.emit('userinfo',userId);
+
+      socket.on('NewProject', (msg) => console.log(msg));
     });
 
     return () => socket.disconnect();
