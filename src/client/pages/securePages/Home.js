@@ -17,7 +17,7 @@ const Home = () => {
       console.log(socket.id,userId);
       socket.emit('userinfo',userId);
 
-      socket.on('NewProject', (msg) => console.log(msg));
+      socket.on('notification', (msg) => console.log(msg));
     });
 
     return () => socket.disconnect();

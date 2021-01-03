@@ -2,6 +2,7 @@ import { Router } from 'express';
 import projectFunctions from '../functions/projectFunctions';
 
 const projectRouter = Router();
+const proFun = new projectFunctions();
 
 projectRouter.route("/").post((req,res) => {
   const projConf = {
@@ -9,7 +10,7 @@ projectRouter.route("/").post((req,res) => {
     members: req.body.members,
     creator: req.user._id
   }
-  projectFunctions.createProject(projConf,res);
+  proFun.createProject(projConf,res);
 });
 
 export default projectRouter;
