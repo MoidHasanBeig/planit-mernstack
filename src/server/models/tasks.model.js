@@ -7,6 +7,7 @@ const taskSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Project'
   },
+  creator: Schema.Types.ObjectId,
   assigned: {
     type: Schema.Types.ObjectId,
     ref: 'User'
