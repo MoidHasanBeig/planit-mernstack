@@ -1,5 +1,5 @@
 const projectFunctions = {
-  createProject: async (event,projDetails) => {
+  createProject: async (event,projDetails,setState) => {
     event.preventDefault();
     const data = await fetch('/project', {
       method: 'POST',
@@ -10,6 +10,15 @@ const projectFunctions = {
       body: JSON.stringify(projDetails)
     }).then(res => res.text());
     console.log(data);
+    setState(prevValue => {
+      return {
+        ...prevValue,
+        contacts: [
+          ...prevValue.contacts,
+          {email:'hi'}
+        ]
+      }
+    })
   }
 }
 

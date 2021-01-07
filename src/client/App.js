@@ -4,24 +4,27 @@ import {
   Switch,
   Route
 } from "react-router-dom";
-import Home from './pages/securePages/Home';
+import SecurePages from './pages/securePages/SecurePages';
 import Login from './pages/Login';
 import NotFound from './pages/NotFound';
+import StateProvider from './stateManagement/context';
 
 import "./App.scss";
 
 const App = () => {
 
   return(
-    <Router>
-      <div className="App">
-        <Switch>
-          <Route path="/login" component={Login} />
-          <Route exact path="/" component={Home} />
-          <Route component={NotFound} />
-        </Switch>
-      </div>
-    </Router>
+    <StateProvider>
+      <Router>
+        <div className="App">
+          <Switch>
+            <Route path="/login" component={Login} />
+            <Route exact path="/" component={SecurePages} />
+            <Route component={NotFound} />
+          </Switch>
+        </div>
+      </Router>
+    </StateProvider>
   );
 }
 

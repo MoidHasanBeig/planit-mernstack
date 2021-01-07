@@ -11,6 +11,7 @@ const socketInit = (server) => {
 
     socket.on('userinfo', (uid) => {
       clients[uid] = socket;
+      console.log(uid,clients[uid].id);
     });
 
     //on user disconnect
