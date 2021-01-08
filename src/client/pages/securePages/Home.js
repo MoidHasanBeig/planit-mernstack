@@ -1,32 +1,20 @@
 import React,{ useState,useEffect } from 'react';
 import io from '../../../../node_modules/socket.io/client-dist/socket.io.js';
 import projectFunctions from '../../functions/projectFunctions';
+import socketFunctions from '../../functions/socketFunctions';
 import { useStateContext } from '../../stateManagement/context';
 
-const SecurePages = () => {
+const Home = () => {
   const { state,setState } = useStateContext();
 
   const [projDetails,setProjDetails] = useState({
     title: '',
     members: ''
   });
-  let userDetails;
-  let socket;
 
   useEffect(() => {
-    socket = io();
-    socket.on('connect', async () => {
-      userDetails = await fetch('/getuser').then(res => res.json());
-      console.log(socket.id,userDetails);
-      setState(userDetails);
-      socket.emit('userinfo',userDetails._id);
-
-      socket.on('notification', (msg) => {
-        console.log(msg);
-        projectFunctions.onNotification(msg,setState);
-      });
-    });
-
+    let socket = io();
+    socketFunctions(socket,setState);
     return () => socket.disconnect();
   },[]);
 
@@ -45,7 +33,6 @@ const SecurePages = () => {
     <div className='secure-pages'>
       {state.username}
       {state.contacts && state.contacts.map((contact,i) => <li key={i}>{contact.email}</li>)}
-      {state.notifications && state.notifications.map((notification,i) => <li key={i}>{notification.content}</li>)}
       <form>
         <label>
           Title:
@@ -58,4 +45,4 @@ const SecurePages = () => {
   );
 }
 
-export default SecurePages;
+export default Home;

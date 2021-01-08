@@ -12,21 +12,20 @@ const projectFunctions = new function () {
     console.log(data);
   }
   this.onNotification = (msg,setState) => {
-
     setState(prevValue => {
-      const seen = new Set();
+      const seen = new Set(); //eslint-disable-line
       let updatedContacts = [...prevValue.contacts,...msg.projMembers];
       let filteredContacts = updatedContacts.filter(contact => {
         const duplicate = seen.has(contact.email);
         seen.add(contact.email);
         return !duplicate;
-      })
+      });
       return {
         ...prevValue,
         notifications: [...prevValue.notifications,msg],
         contacts: msg.projMembers ? filteredContacts : prevValue.contacts
       };
-    })
+    });
   }
 }
 

@@ -9,7 +9,7 @@ const StateProvider = (props) => {
 
   return (
     <StateContext.Provider value={{state,setState}}>
-      {props.children}
+      { props.children /*eslint-disable-line*/ }
     </StateContext.Provider>
   );
 }
