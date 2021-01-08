@@ -9,16 +9,14 @@ const checkAuth = (req,res,next) => {
 }
 
 const router = (app,routerConf) => {
-  //redirect after auth check
-  app.all("/", checkAuth);
 
   //authentication
   app.use("/auth/google", authRouter);
 
   //login
-  app.use("/login", (req,res,next) => {
+  app.use("/login", (req,res) => {
     if(req.isAuthenticated()) res.redirect("/");
-    else next();
+    else renderHtml(req,res,routerConf.prodMode,routerConf.compiler);
   });
 
   //logout
@@ -27,11 +25,14 @@ const router = (app,routerConf) => {
     res.redirect("/login");
   });
 
+  //redirect after auth check
+  app.all('*',checkAuth);
+
   //project
-  app.use("/project", checkAuth, (req,res) => projectRouter(req,res));
+  app.use("/project", projectRouter);
 
   //user
-  app.use("/getuser", checkAuth, userRouter);
+  app.use("/getuser", userRouter);
 
   //render html layout
   app.use((req,res) => renderHtml(req,res,routerConf.prodMode,routerConf.compiler));

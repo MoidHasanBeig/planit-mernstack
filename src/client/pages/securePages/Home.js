@@ -1,22 +1,14 @@
-import React,{ useState,useEffect } from 'react';
-import io from '../../../../node_modules/socket.io/client-dist/socket.io.js';
-import projectFunctions from '../../functions/projectFunctions';
-import socketFunctions from '../../functions/socketFunctions';
+import React,{ useState } from 'react';
 import { useStateContext } from '../../stateManagement/context';
+import projectFunctions from '../../functions/projectFunctions';
 
 const Home = () => {
-  const { state,setState } = useStateContext();
+  const { state } = useStateContext();
 
   const [projDetails,setProjDetails] = useState({
     title: '',
     members: ''
   });
-
-  useEffect(() => {
-    let socket = io();
-    socketFunctions(socket,setState);
-    return () => socket.disconnect();
-  },[]);
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -30,7 +22,7 @@ const Home = () => {
   }
 
   return (
-    <div className='secure-pages'>
+    <div>
       {state.username}
       {state.contacts && state.contacts.map((contact,i) => <li key={i}>{contact.email}</li>)}
       <form>
