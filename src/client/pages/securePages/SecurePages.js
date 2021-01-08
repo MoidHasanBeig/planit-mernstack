@@ -21,7 +21,10 @@ const SecurePages = () => {
       setState(userDetails);
       socket.emit('userinfo',userDetails._id);
 
-      socket.on('notification', (msg) => console.log(msg));
+      socket.on('notification', (msg) => {
+        console.log(msg);
+        projectFunctions.onNotification(msg,setState);
+      });
     });
 
     return () => socket.disconnect();
@@ -42,13 +45,14 @@ const SecurePages = () => {
     <div className='secure-pages'>
       {state.username}
       {state.contacts && state.contacts.map((contact,i) => <li key={i}>{contact.email}</li>)}
+      {state.notifications && state.notifications.map((notification,i) => <li key={i}>{notification.content}</li>)}
       <form>
         <label>
           Title:
           <input type="text" value={projDetails.title} onChange={handleChange} name="title" />
           <input type="text" value={projDetails.members} onChange={handleChange} name="members" />
         </label>
-        <button className="btn btn-primary" onClick={(evt) => projectFunctions.createProject(evt,projDetails,setState)}>Submit</button>
+        <button className="btn btn-primary" onClick={(evt) => projectFunctions.createProject(evt,projDetails)}>Submit</button>
       </form>
     </div>
   );

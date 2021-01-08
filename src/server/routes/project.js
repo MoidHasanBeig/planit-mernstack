@@ -7,7 +7,7 @@ projectRouter.route("/").post((req,res) => {
   const projConf = {
     title: req.body.title,
     members: req.body.members,
-    creator: req.user._id
+    creator: req.user
   }
   projectFunctions.createProject(projConf,res);
 });

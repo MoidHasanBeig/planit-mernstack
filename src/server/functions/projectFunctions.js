@@ -10,15 +10,22 @@ const projectFunctions = new function () {
   this.createProject = (conf,res) => {
     const membersArr = conf.members.split(",");
     let memberIds = [];
+    let projMembers = [];
     User.find({email: { $in: membersArr}}).exec((err,foundMembers) => {
       foundMembers && foundMembers.forEach(user => {
+        projMembers.push({
+          email: user.email,
+          name: user.username,
+          id: user._id,
+          image: user.image
+        });
         memberIds.push(user._id);
       });
-      memberIds.push(conf.creator);
+      memberIds.push(conf.creator._id);
       const newProject = new Project({
         _id: new mongoose.mongo.ObjectId(),
         title: conf.title,
-        creator: conf.creator,
+        creator: conf.creator._id,
         members: memberIds
       });
       newProject.save(err => {
@@ -37,31 +44,45 @@ const projectFunctions = new function () {
               clients[member].join(newProject._id);
             }
           });
-          this.sendNotification(memberIds,newProject._id,`You've been added to ${newProject.title} project by ${newProject.creator}`);
-          res.send(newProject);
+          this.sendNotification({
+            type: 'newproject',
+            members: memberIds,
+            projId: newProject._id,
+            content: `You've been added to ${conf.title} project by ${conf.creator.username}`,
+            projMembers: projMembers
+          });
+          res.send({
+            newProject,
+            creator: {
+              email: conf.creator.email,
+              name: conf.creator.username,
+              id: conf.creator._id,
+              image: conf.creator.image
+            }
+          });
         }
       });
     });
   }
 
   //on sending a new notification
-  this.sendNotification = (members,projId,content,task=null,to=null) => {
+  this.sendNotification = (data) => {
     const newNotif = new Notification({
       _id: new mongoose.mongo.ObjectId(),
-      project: projId,
-      content: content,
+      project: data.projId,
+      content: data.content,
       read: false
     });
     newNotif.save(err => {
       if(!err) {
-        if(!to) {
+        if(data.type === 'newproject') {
           //add notif id to each user document
-          User.updateMany({_id: {$in: members}}, {$push: {notifications: newNotif._id}}, (err,docs) => {
+          User.updateMany({_id: {$in: data.members}}, {$push: {notifications: newNotif._id}}, (err,docs) => {
             console.log(docs);
           });
-          //send notif over socket
-          io.to(projId).emit('notification',content);
         }
+        //send notif over socket
+        io.to(data.projId).emit('notification',data);
       }
     });
   }
