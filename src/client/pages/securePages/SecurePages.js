@@ -3,10 +3,13 @@ import {
   BrowserRouter as Router,
   Switch,
   Route
-} from "react-router-dom";
+} from 'react-router-dom';
 
 import Home from './Home';
 import Notifications from './Notifications';
+import Messages from './Messages';
+import Profile from './Profile';
+import MyNavbar from './components/MyNavbar';
 
 import io from '../../../../node_modules/socket.io/client-dist/socket.io.js';
 import socketFunctions from '../../functions/socketFunctions';
@@ -24,9 +27,12 @@ const SecurePages = () => {
   return (
     <Router>
       <div className='secure-pages'>
+        <MyNavbar />
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/notifications" component={Notifications} />
+          <Route path="/messages" component={Messages} />
+          <Route path="/profile" component={Profile} />
         </Switch>
       </div>
     </Router>

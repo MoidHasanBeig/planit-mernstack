@@ -23,8 +23,7 @@ const Home = () => {
 
   return (
     <div>
-      {state.username}
-      {state.contacts && state.contacts.map((contact,i) => <li key={i}>{contact.email}</li>)}
+      {state.projects && state.projects.map((project,i) => <li key={i}>{project.title} by {project.creator.username}</li>)}
       <form>
         <label>
           Title:
