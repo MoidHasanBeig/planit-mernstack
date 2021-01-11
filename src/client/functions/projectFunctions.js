@@ -1,5 +1,5 @@
 const projectFunctions = new function () {
-  this.createProject = async (event,projDetails) => {
+  this.createProject = async (event,projDetails,toggle,setProjDetails) => {
     event.preventDefault();
     const data = await fetch('/project', {
       method: 'POST',
@@ -8,10 +8,16 @@ const projectFunctions = new function () {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(projDetails)
-    }).then(res => res.json());
+    }).then(res => res.text());
     console.log(data);
+    toggle(false);
+    setProjDetails({
+      title: '',
+      members: ''
+    });
   }
   this.onNotification = (msg,setState) => {
+    console.log('msg:',msg);
     setState(prevValue => {
       const seen = new Set(); //eslint-disable-line
       let updatedContacts = [...prevValue.contacts,...msg.projMembers];
@@ -23,7 +29,8 @@ const projectFunctions = new function () {
       return {
         ...prevValue,
         notifications: [...prevValue.notifications,msg],
-        contacts: msg.projMembers ? filteredContacts : prevValue.contacts
+        contacts: msg.projMembers ? filteredContacts : prevValue.contacts,
+        projects: [...prevValue.projects, msg.newProject]
       };
     });
   }

@@ -1,5 +1,5 @@
 const path = require("path");
-const webpack = require("webpack");
+const webpack = require("webpack"); //eslint-disable-line
 const nodeExternals = require('webpack-node-externals');
 
 module.exports = {

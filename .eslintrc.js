@@ -3,6 +3,9 @@ module.exports = {
       "browser": true,
       "node": true
   },
+  "rules": {
+    "react/prop-types": "off"
+  },
   "plugins": [ "react" ],
   "extends": [
     "eslint:recommended",

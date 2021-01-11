@@ -49,17 +49,11 @@ const projectFunctions = new function () {
             members: memberIds,
             projId: newProject._id,
             content: `You've been added to ${conf.title} project by ${conf.creator.username}`,
-            projMembers: projMembers
+            projMembers: projMembers,
+            newProject: newProject,
+            createdAt: new Date()
           });
-          res.send({
-            newProject,
-            creator: {
-              email: conf.creator.email,
-              name: conf.creator.username,
-              id: conf.creator._id,
-              image: conf.creator.image
-            }
-          });
+          res.send('New project added');
         }
       });
     });

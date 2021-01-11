@@ -5,11 +5,12 @@ const StateContext = React.createContext();
 export const useStateContext = () => useContext(StateContext);
 
 const StateProvider = (props) => {
+  const { children } = props;
   const [state,setState] = useState({});
 
   return (
     <StateContext.Provider value={{state,setState}}>
-      { props.children /*eslint-disable-line*/ }
+      { children }
     </StateContext.Provider>
   );
 }

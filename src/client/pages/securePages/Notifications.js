@@ -7,7 +7,19 @@ const Notifications = () => {
 
   return (
     <div>
-      {state.notifications && state.notifications.map((notification,i) => <li key={i}>{notification.content}</li>)}
+      <h2 className="text-muted mt-3 mb-5">Notifications</h2>
+      {state.notifications && state.notifications.slice(0).reverse().map((notification,i) => {
+        return (
+          <div key={i} className="card my-2">
+            <div className="card-header small">
+              {new Date(notification.createdAt).toDateString()}
+            </div>
+            <div className="card-body">
+              <p className="mb-0">{notification.content}</p>
+            </div>
+          </div>
+        )
+      })}
     </div>
   );
 }

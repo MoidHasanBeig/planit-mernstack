@@ -1,37 +1,51 @@
 import React,{ useState } from 'react';
-import { useStateContext } from '../../stateManagement/context';
-import projectFunctions from '../../functions/projectFunctions';
+import { Link } from 'react-router-dom';
 
-const Home = () => {
+import CreateProjectModal from './components/CreateProjectModal';
+import { useStateContext } from '../../stateManagement/context';
+
+const Home = (props) => {
   const { state } = useStateContext();
 
-  const [projDetails,setProjDetails] = useState({
-    title: '',
-    members: ''
-  });
-
-  function handleChange(event) {
-    const { name, value } = event.target;
-
-    setProjDetails(prevValue => {
-      return {
-        ...prevValue,
-        [name]: value
-      };
-    });
-  }
+  const [showModal,setShowModal] = useState(false);
 
   return (
     <div>
-      {state.projects && state.projects.map((project,i) => <li key={i}>{project.title} by {project.creator.username}</li>)}
-      <form>
-        <label>
-          Title:
-          <input type="text" value={projDetails.title} onChange={handleChange} name="title" />
-          <input type="text" value={projDetails.members} onChange={handleChange} name="members" />
-        </label>
-        <button className="btn btn-primary" onClick={(evt) => projectFunctions.createProject(evt,projDetails)}>Submit</button>
-      </form>
+      <CreateProjectModal show={showModal} toggle={setShowModal}/>
+      <h2 className="text-muted mt-3 mb-5">Your projects</h2>
+      <div className="row row-cols-1 row-cols-md-3">
+        <div className="col py-3">
+          <div onClick={() => setShowModal(true)} className="btn bg-light card h-100">
+            <div className="card-body w-50 d-flex align-items-center m-auto">
+              <p className="text-center text-muted card-text">
+                <i className="fas fa-calendar-plus mr-2"></i>Start a new project
+              </p>
+            </div>
+          </div>
+        </div>
+        {state.projects && state.projects.slice(0).reverse().map((project,i) => {
+          return (
+            <Link
+              key={i}
+              onClick={() => props.setCurrentProject(i)}
+              to='/projectview'
+              className="text-dark nav-link p-0"
+            >
+              <div className="col py-3 h-100">
+                <div className="card h-100">
+                  <div className="card-body">
+                    <h5 className="card-title">{project.title}</h5>
+                    <p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                  </div>
+                  <div className="card-footer">
+                    <small className="text-muted">Members: {project.creator.username} + {project.members.length-1}</small>
+                  </div>
+                </div>
+              </div>
+            </Link>
+          );
+        })}
+      </div>
     </div>
   );
 }
