@@ -25,11 +25,33 @@ html {
   }
 
   overflow-y: scroll;
+  user-select: none;
+  height: 100%;
 
   body {
-    .App {
-      user-select: none;
-      font-family: Montserrat, Arial, Helvetica, sans-serif;
+    font-family: Montserrat, Arial, Helvetica, sans-serif;
+    height: 100%;
+
+    #root {
+      height: 100%;
+
+      .App {
+        .login-page {
+          background-image: url('./assets/images/signupbg.jpg');
+          background-size: 40%;
+          background-position: center;
+
+          .card {
+            background-color: rgba(255,255,255,0.9);
+          }
+        }
+
+        .secure-pages {
+          .main-container {
+            
+          }
+        }
+      }
     }
   }
 }

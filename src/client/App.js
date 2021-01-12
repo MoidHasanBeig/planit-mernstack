@@ -17,7 +17,7 @@ const App = () => {
   return(
     <StateProvider>
       <Router>
-        <div className="App">
+        <div className="App h-100">
           <Switch>
             <Route path="/login" component={Login} />
             <Route path="/" component={SecurePages} />

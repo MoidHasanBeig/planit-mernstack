@@ -7,6 +7,11 @@ const userFunctions = new function () {
       console.log(docs);
     });
   }
+  this.updateNotificationCount = (contacts) => {
+    User.updateMany({_id: contacts}, { $inc: {newnotifcount: 1}}, (err,docs) => {
+      console.log(docs);
+    });
+  }
   this.subscribe = (projectId,socket) => {
     Project.find({_id: projectId}, (err,project) => {
       socket.join(project.name);

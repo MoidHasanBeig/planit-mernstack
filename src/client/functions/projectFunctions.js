@@ -30,7 +30,8 @@ const projectFunctions = new function () {
         ...prevValue,
         notifications: [...prevValue.notifications,msg],
         contacts: msg.projMembers ? filteredContacts : prevValue.contacts,
-        projects: [...prevValue.projects, msg.newProject]
+        projects: [...prevValue.projects, msg.newProject],
+        newnotifcount: prevValue.newnotifcount + 1
       };
     });
   }

@@ -9,6 +9,7 @@ const projectFunctions = new function () {
   //on creating new project
   this.createProject = (conf,res) => {
     const membersArr = conf.members.split(",");
+    membersArr.push(conf.creator.email);
     let memberIds = [];
     let projMembers = [];
     User.find({email: { $in: membersArr}}).exec((err,foundMembers) => {
@@ -21,7 +22,6 @@ const projectFunctions = new function () {
         });
         memberIds.push(user._id);
       });
-      memberIds.push(conf.creator._id);
       const newProject = new Project({
         _id: new mongoose.mongo.ObjectId(),
         title: conf.title,
@@ -34,6 +34,7 @@ const projectFunctions = new function () {
           User.updateMany({_id: {$in: memberIds}}, {$push: {projects: newProject._id}}, (err,docs) => {
             console.log(docs);
           });
+          userFunctions.updateNotificationCount(memberIds);
           //add contacts to all members of the project
           userFunctions.addContacts(memberIds);
           //create project room and join online users
@@ -44,13 +45,19 @@ const projectFunctions = new function () {
               clients[member].join(newProject._id);
             }
           });
+          const projDetails = {
+            ...newProject._doc,
+            creator: {
+              username: conf.creator.username
+            }
+          }
           this.sendNotification({
             type: 'newproject',
             members: memberIds,
             projId: newProject._id,
             content: `You've been added to ${conf.title} project by ${conf.creator.username}`,
             projMembers: projMembers,
-            newProject: newProject,
+            newProject: projDetails,
             createdAt: new Date()
           });
           res.send('New project added');

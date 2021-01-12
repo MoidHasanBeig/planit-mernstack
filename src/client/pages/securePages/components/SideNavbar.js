@@ -1,13 +1,18 @@
 import React,{ useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Badge } from 'react-bootstrap';
+
+import { useStateContext } from '../../../stateManagement/context';
 
 const SideNavbar = () => {
   const [active,setActive] = useState(window.location.pathname);
+  const { state } = useStateContext();
 
   return (
     <nav className="h-100 position-fixed col-md-3 col-lg-2 d-none d-md-block bg-dark sidebar">
-      <h1 className="text-white-50 mt-3 ml-2 fas fa-calendar-check"></h1>
-      <ul className="nav flex-column mt-4">
+      <h1 className="w-100 text-center text-white-50 mt-4 mx-auto fas fa-calendar-check"></h1>
+      <p className="text-center text-white-50">Plan it</p>
+      <ul className="nav small flex-column mt-3">
         <li className="nav-item">
           <Link
             onClick={() => setActive('/')}
@@ -24,6 +29,7 @@ const SideNavbar = () => {
             to='/notifications'
           >
             <i className="text-white-50 fas fa-bell mr-2"></i>Notifications
+            <Badge className="ml-3" variant="light">{state.newnotifcount}</Badge>
           </Link>
         </li>
         <li className="nav-item">
@@ -33,6 +39,7 @@ const SideNavbar = () => {
             to='/messages'
           >
             <i className="text-white-50 fas fa-envelope mr-2"></i>Messages
+            <Badge className="ml-3" variant="light">9</Badge>
           </Link>
         </li>
         <li className="nav-item">

@@ -7,6 +7,7 @@ const userSchema = new Schema({
   email: String,
   userid: String,
   image: String,
+  newnotifcount: Number,
   contacts: [{
     type: Schema.Types.ObjectId,
     ref: 'User'

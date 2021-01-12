@@ -36,7 +36,7 @@ const SecurePages = () => {
         <div className='container-fluid'>
           <div className='row'>
             <SideNavbar />
-            <div className='mt-2 col-md-9 ml-sm-auto col-lg-10 px-4'>
+            <div className='main-container mt-2 col-md-9 ml-sm-auto col-lg-10 px-4'>
               <Switch>
                 <Route exact path="/">
                   <Home setCurrentProject={setCurrentProject} />

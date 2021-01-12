@@ -12,7 +12,7 @@ const Home = (props) => {
   return (
     <div>
       <CreateProjectModal show={showModal} toggle={setShowModal}/>
-      <h2 className="text-muted mt-3 mb-5">Your projects</h2>
+      <h2 className="text-muted mt-3 mb-4">Your projects</h2>
       <div className="row row-cols-1 row-cols-md-3">
         <div className="col py-3">
           <div onClick={() => setShowModal(true)} className="btn bg-light card h-100">

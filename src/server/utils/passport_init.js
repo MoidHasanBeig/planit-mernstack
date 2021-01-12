@@ -30,7 +30,8 @@ const passportInit = (app) => {
             username: profile.displayName,
             email: profile.emails[0].value,
             userid: profile.id,
-            image: profile.photos[0].value
+            image: profile.photos[0].value,
+            newnotifcount: 0
           });
           newUser.save();
           done(err,newUser);
