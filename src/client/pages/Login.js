@@ -11,7 +11,7 @@ const Login = () => {
           <p className="card-text">With one click</p>
           <button onClick={() => window.location.href = '/auth/google'} className="shadow btn btn-dark">
             <i className="fab fa-google mr-3"></i>
-            Continue with Moid
+            Continue with Papa
           </button>
         </div>
       </div>
