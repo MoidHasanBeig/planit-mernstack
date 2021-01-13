@@ -7,7 +7,7 @@
     "start": "node ./dist/server.bundle.js",
     "build": "webpack --config webpack.client.config.js --mode production && webpack --config webpack.server.config.js --mode production",
     "dev": "webpack --config webpack.client.config.js --mode development && webpack --config webpack.server.config.js --mode development && node ./dist/server.bundle.js",
-    "deploy": "git add . && git commit -m 'Push before deploy' && git push && webpack --config webpack.client.config.js --mode production && webpack --config webpack.server.config.js --mode production && git add -f dist && git commit -m 'deploying' && git push origin main:deploy"
+    "deploy": "git add . && git commit -m 'Push before deploy' && git push && webpack --config webpack.client.config.js --mode production && webpack --config webpack.server.config.js --mode production && git add -f dist && git commit -m 'deploying' && git push -f origin main:deploy"
   },
   "repository": {
     "type": "git",
