@@ -2,7 +2,7 @@ import projectFunctions from './projectFunctions';
 
 const socketFunctions = (socket,setState) => {
   socket.on('connect', async () => {
-    let userDetails = await fetch('/getuser').then(res => res.json());
+    let userDetails = await fetch('/user').then(res => res.json());
     console.log(socket.id,userDetails);
     setState(userDetails);
     socket.emit('userinfo',userDetails._id);

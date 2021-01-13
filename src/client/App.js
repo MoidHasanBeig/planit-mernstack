@@ -7,7 +7,6 @@ import {
 
 import SecurePages from './pages/securePages/SecurePages';
 import Login from './pages/Login';
-import NotFound from './pages/NotFound';
 import StateProvider from './stateManagement/context';
 
 import "./App.scss";
@@ -21,7 +20,6 @@ const App = () => {
           <Switch>
             <Route path="/login" component={Login} />
             <Route path="/" component={SecurePages} />
-            <Route component={NotFound} />
           </Switch>
         </div>
       </Router>

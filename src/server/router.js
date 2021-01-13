@@ -32,7 +32,7 @@ const router = (app,routerConf) => {
   app.use("/project", projectRouter);
 
   //user
-  app.use("/getuser", userRouter);
+  app.use("/user", userRouter);
 
   //render html layout
   app.use((req,res) => renderHtml(req,res,routerConf.prodMode,routerConf.compiler));

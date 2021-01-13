@@ -12,7 +12,7 @@ import Messages from './Messages';
 import Profile from './Profile';
 import MobileNavbar from './components/MobileNavbar';
 import SideNavbar from './components/SideNavbar';
-import NotFound from '../NotFound';
+import NotFound from './NotFound';
 
 import io from '../../../../node_modules/socket.io/client-dist/socket.io.js';
 import socketFunctions from '../../functions/socketFunctions';

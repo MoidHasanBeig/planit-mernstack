@@ -29,7 +29,7 @@ const SideNavbar = () => {
             to='/notifications'
           >
             <i className="text-white-50 fas fa-bell mr-2"></i>Notifications
-            <Badge className="ml-3" variant="light">{state.newnotifcount}</Badge>
+            <Badge className="ml-3" variant="light">{state.newnotifcount > 0 && state.newnotifcount}</Badge>
           </Link>
         </li>
         <li className="nav-item">

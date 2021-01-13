@@ -15,4 +15,10 @@ userRouter.route("/").get((req,res) => {
   exec((err,user) => res.send(user));
 });
 
+userRouter.route("/readnotifs").get((req,res) => {
+  const id = req.user._id;
+  console.log('read');
+  User.updateOne({_id:id},{newnotifcount: 0},() => res.send('Notifications read'));
+})
+
 export default userRouter;

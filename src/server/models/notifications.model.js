@@ -16,7 +16,6 @@ const notificationSchema = new Schema({
     ref: 'User'
   },
   content: String,
-  read: Boolean
 },{
   timestamps: true
 });

@@ -71,8 +71,7 @@ const projectFunctions = new function () {
     const newNotif = new Notification({
       _id: new mongoose.mongo.ObjectId(),
       project: data.projId,
-      content: data.content,
-      read: false
+      content: data.content
     });
     newNotif.save(err => {
       if(!err) {
