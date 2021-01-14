@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node ./dist/server.bundle.js",
     "build": "webpack --config webpack.client.config.js --mode production && webpack --config webpack.server.config.js --mode production",
-    "dev": "webpack --config webpack.client.config.js --mode development && webpack --config webpack.server.config.js --mode development && node ./dist/server.bundle.js",
+    "dev": "webpack --config webpack.client.config.js --mode development && webpack --config webpack.server.config.js --mode development && node ./dist/server.bundle.js"
   },
   "repository": {
     "type": "git",
