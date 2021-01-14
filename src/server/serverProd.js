@@ -15,19 +15,19 @@ const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 
+const argv = {
+  mode: process.env.NODE_ENV
+}
+const prodMode = (argv.mode === 'production');
+
 //initialize utils
-passportInit(app);
+passportInit(app,prodMode);
 mongoInit();
 socketInit(server);
 
 app.use(express.static(__dirname));
 
-const argv = {
-  mode: process.env.NODE_ENV
-}
 const compiler = null;
-const prodMode = (argv.mode === 'production');
-
 
 //initialize router
 const routerConf = {

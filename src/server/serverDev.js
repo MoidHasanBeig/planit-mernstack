@@ -20,18 +20,19 @@ const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 
-//initialize utils
-passportInit(app);
-mongoInit();
-socketInit(server);
-
 const argv = {
   mode: process.env.NODE_ENV
 }
-const conf = config(null,argv);
-const compiler = webpack(conf);
 const devMode = (argv.mode === 'development');
 const prodMode = (argv.mode === 'production');
+
+//initialize utils
+passportInit(app,prodMode);
+mongoInit();
+socketInit(server);
+
+const conf = config(null,argv);
+const compiler = webpack(conf);
 
 prodMode
   ? app.use(express.static(__dirname))
