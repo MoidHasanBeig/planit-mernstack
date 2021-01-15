@@ -50,7 +50,7 @@ const passportInit = (app,prodMode) => {
 
   passport.deserializeUser(function(id, done) {
     User.findById(id, function(err, user) {
-      done(err, user);
+      done(err, user._id);
     });
   });
 }

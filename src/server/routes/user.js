@@ -4,7 +4,7 @@ import User from '../models/users.model';
 const userRouter = Router();
 
 userRouter.route("/").get((req,res) => {
-  const id = req.user._id;
+  const id = req.user;
   User.findById(id).
   populate({
     path: 'projects',

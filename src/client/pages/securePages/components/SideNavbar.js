@@ -11,7 +11,7 @@ const SideNavbar = () => {
   return (
     <nav className="h-100 position-fixed col-md-3 col-lg-2 d-none d-md-block bg-dark sidebar">
       <h1 className="w-100 text-center text-white-50 mt-4 mx-auto fas fa-calendar-check"></h1>
-      <p className="text-center text-white-50">Plan it</p>
+      <p className="text-center text-white-50">Simplan</p>
       <ul className="nav small flex-column mt-3">
         <li className="nav-item">
           <Link
