@@ -1,16 +1,16 @@
 require('dotenv').config();
 
 import passport from 'passport';
-import session from 'express-session';
+import * as session from 'cookie-session';
 import { OAuth2Strategy as GoogleStrategy } from 'passport-google-oauth';
 import User from '../models/users.model';
 
 const passportInit = (app,prodMode) => {
 
   app.use(session({
-    secret:process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: true
+    name: 'session',
+    keys: [process.env.SESSION_SECRET],
+    expires: new Date(1926232513678)
   }));
   app.use(passport.initialize());
   app.use(passport.session());
@@ -50,7 +50,12 @@ const passportInit = (app,prodMode) => {
 
   passport.deserializeUser(function(id, done) {
     User.findById(id, function(err, user) {
-      done(err, user._id);
+      const userDetails = {
+        _id: user._id,
+        email: user.email,
+        username: user.username
+      }
+      done(err, userDetails);
     });
   });
 }

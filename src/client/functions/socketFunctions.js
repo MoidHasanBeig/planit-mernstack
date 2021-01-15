@@ -1,6 +1,7 @@
 import projectFunctions from './projectFunctions';
 
 const socketFunctions = (socket,setState) => {
+  socket.offAny();
   socket.on('connect', async () => {
     let userDetails = await fetch('/user').then(res => res.json());
     console.log(socket.id,userDetails);
