@@ -24,6 +24,15 @@ const SideNavbar = () => {
         </li>
         <li className="nav-item">
           <Link
+            onClick={() => setActive('/')}
+            className={`btn-dark my-2 rounded-pill nav-link ${active==='/' && 'active'}`}
+            to='/'
+          >
+            <i className="text-white-50 fas fa-tasks mr-2"></i>My tasks
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link
             onClick={() => setActive('/notifications')}
             className={`btn-dark my-2 rounded-pill nav-link ${active==='/notifications' && 'active'}`}
             to='/notifications'
@@ -49,6 +58,15 @@ const SideNavbar = () => {
             to='/profile'
           >
             <i className="text-white-50 fas fa-user mr-2"></i>Profile
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link
+            onClick={() => setActive('/profile')}
+            className={`btn-dark my-2 rounded-pill nav-link ${active==='/profile' && 'active'}`}
+            to='/profile'
+          >
+            <i className="text-white-50 fas fa-cog mr-2"></i>Settings
           </Link>
         </li>
       </ul>
